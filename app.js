@@ -12,7 +12,6 @@ var score;
 var start_time;
 var time_elapsed;
 var interval;
-var max_time;
 var movingPoints = {
 	i : 5,
 	j : 5,
@@ -23,7 +22,6 @@ var movingPoints = {
 var monsterInterval = 0;
 var monsters = new Array();
 var liveRemained = 5;
-var monstersAmount = 2; // according to the setup !!!!!
 var ballsNotEaten;
 var extraLive = {
 	i : 0,
@@ -41,6 +39,17 @@ var userAccount = {};
 userAccount['k'] = 'k';
 var allGoodKeyboard = {"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,"d":68,"b":66,"a":65,"s":83,"i":73,"f":70,"k":75,"+":187,"p":80,"o":79,"u":85,"z":90,"t":84,"r":82,"e":69,"w":87,"g":71,"h":72,"j":74,"l":76,"#":191,"y":89,"x":88,"c":67,"v":86,"n":78,"m":77,",":188,".":190,"-":189,"ArrowRight":39,"ArrowLeft":37,"ArrowUp":38,"ArrowDown":40,";":188,":":190,"'":191,"*":187,"Q":81,"W":87,"E":69,"R":82,"T":84,"Z":90,"S":83,"A":65,"D":68,"I":73,"U":85,"O":79,"Y":89,"X":88,"C":67,"F":70,"V":86,"G":71,"B":66,"H":72,"N":78,"J":74,"M":77,"K":75,"L":76,"P":80,"!":49,"/":55,"=":48};
 var allPlaySettings;
+
+var up;
+var down;
+var left;
+var right;
+var food_remain;
+var smallColor;
+var midColor;
+var bigColor;
+var max_time;
+var monstersAmount;
 
 
 // changeing pages from cur to next: 
@@ -279,8 +288,10 @@ function inableForm(c){
 }
 
 function exitGame(){
+	// kill interval
+	clearInterval(interval);
 	//restart settings
-	allPlaySettings = new Object();
+	allPlaySettings = {}; // new Onject()
 	//reset settingsForm
 	let allChildren = document.getElementById("settingsPage").childNodes;
 	inableForm(allChildren);
@@ -319,19 +330,58 @@ function fillRandomly() {
 
 
 function Start() {
+
+	up = allGoodKeyboard[allPlaySettings[0].value]; // ascii val
+	down = allGoodKeyboard[allPlaySettings[1].value];
+	left = allGoodKeyboard[allPlaySettings[2].value];
+	right = allGoodKeyboard[allPlaySettings[3].value];
+	food_remain = parseInt(allPlaySettings[4].value);
+	smallColor = allPlaySettings[5].value;
+	midColor = allPlaySettings[6].value;
+	bigColor = allPlaySettings[7].value;
+	max_time = parseInt(allPlaySettings[8].value);
+	monstersAmount = parseInt(allPlaySettings[9].value);
 	
+	packman = {
+		i : 0,
+		j : 0,
+		diraction : 4,
+		color : "yellow",
+		mouthOpen : true,
+	};
 	board = new Array();
 	score = 0;
-	var cnt = 100;
-	max_time = 120; // according to the setup !!!!!
-	var food_remain = 10; // according to the setup !!!!!
+	start_time = new Date();
+	movingPoints = {
+		i : 5,
+		j : 5,
+		prev_val : 0,
+		show : true,
+		interval : 0,
+	};
+	monsterInterval = 0;
+	monsters = new Array();
+	liveRemained = 5;
 	ballsNotEaten = food_remain;
+	extraLive = {
+		i : 0,
+		j : 0,
+		show : true,
+		interval : 0,
+		small : true,
+	};
+	timeAdder = {
+		i : 0,
+		j : 0,
+		show : true,
+	};
+
+	var cnt = 100;
 	var food_remain_big = parseInt(0.1*food_remain);
 	var food_remain_mid = parseInt(0.3*food_remain);
 	var food_remain_small = food_remain - food_remain_big - food_remain_mid;
-	//max_score = 5*food_remain_small + 15*food_remain_mid + 25*food_remain_big + 50;
 	var pacman_remain = 1;
-	start_time = new Date();
+	
 	//monsters:
 	monstersLocations = [[0,0],[0,10],[10,0],[10,10]];
 	for (var m = 0; m < monstersAmount; m++){
@@ -474,16 +524,16 @@ function findRandomEmptyCell(board) {
 }
 
 function GetKeyPressed() {
-	if (keysDown[38]) {
+	if (keysDown[up]) {
 		return 1;
 	}
-	if (keysDown[40]) {
+	if (keysDown[down]) {
 		return 2;
 	}
-	if (keysDown[37]) {
+	if (keysDown[left]) {
 		return 3;
 	}
-	if (keysDown[39]) {
+	if (keysDown[right]) {
 		return 4;
 	}
 }
@@ -685,7 +735,7 @@ function Draw(diraction) {
 				//circle
 				context.beginPath();
 				context.arc(center.x, center.y, 8, 0, 2 * Math.PI); // circle
-				context.fillStyle = "#ff9999"; //color
+				context.fillStyle = smallColor; //color
 				context.fill();
 				//text
 				context.font = "10px Verdana";
@@ -694,7 +744,7 @@ function Draw(diraction) {
 			} else if (board[i][j] == 2 ) { // food mid
 				context.beginPath();
 				context.arc(center.x, center.y, 12, 0, 2 * Math.PI); // circle
-				context.fillStyle = "#ff4d4d"; //color
+				context.fillStyle = midColor; //color
 				context.fill();
 				//text
 				context.font = "10px Verdana";
@@ -703,7 +753,7 @@ function Draw(diraction) {
 			} else if (board[i][j] == 3 ) { // food big
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "#ff0000"; //color
+				context.fillStyle = bigColor; //color
 				context.fill();	
 				//text
 				context.font = "10px Verdana";
