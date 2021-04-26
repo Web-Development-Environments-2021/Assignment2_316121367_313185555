@@ -335,7 +335,8 @@ function Start() {
 	down = allGoodKeyboard[allPlaySettings[1].value];
 	left = allGoodKeyboard[allPlaySettings[2].value];
 	right = allGoodKeyboard[allPlaySettings[3].value];
-	food_remain = parseInt(allPlaySettings[4].value);
+	//food_remain = parseInt(allPlaySettings[4].value);
+	food_remain = 20;
 	smallColor = allPlaySettings[5].value;
 	midColor = allPlaySettings[6].value;
 	bigColor = allPlaySettings[7].value;
@@ -407,6 +408,7 @@ function Start() {
 			for (var w = 0; w < 8; w++){
 				if ( walls[w][0] == i && walls[w][1] == j ){
 					isWall = true;
+					break;
 				}
 			}
 			if (isWall){
@@ -459,29 +461,26 @@ function Start() {
 	for (var m = 0; m < monstersAmount; m++){ // locate the monsters
 		board[monsters[m].i][monsters[m].j] = 7;
 	}
-	while (food_remain > 0) {
+	while (food_remain > 0){
 		var emptyCell = findRandomEmptyCell(board);
-		
-		//board[emptyCell[0]][emptyCell[1]] = 1; /////////////////////////////////////////////////
-		//food_remain--;
-
-		///
 		var i = emptyCell[0];
 		var j = emptyCell[1];
-		randomPointKind = Math.random() * (food_remain - 1) + 1;					
-		if (randomPointKind <= food_remain_small){
+		if (food_remain_small > 0){
 			board[i][j] = 1;
-			food_remain_small -- ;
-		} else if (randomPointKind <= food_remain_small+food_remain_mid) {
+			food_remain_small--;
+		}
+		else if (food_remain_mid > 0){
 			board[i][j] = 2;
-			food_remain_mid -- ;
-		} else {
+			food_remain_mid--;
+		}
+		else{
 			board[i][j] = 3;
-			food_remain_big -- ;
-		}					
+			food_remain_mid--;
+		}
 		food_remain--;
-		////
+
 	}
+	
 	//place exstraLive
 	if (extraLive.show){ // no need for this if
 		var heartCell = findRandomEmptyCell(board);
