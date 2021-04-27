@@ -91,9 +91,9 @@ function outsideClickDialogHeandlear(){
 
 // changeing pages from cur to next: 
 function moveTo(cur, next){
-	if ( !(cur == next)){
-		userLogIn = "";// every move betwen pages log out the user
-	}
+	// if ( !(cur == next)){
+	// 	userLogIn = "";// every move betwen pages log out the user
+	// }
 	if (cur == 'settingsPage' && document.getElementById('gamePage').style.display == ''){ //we are in game mode 
 		exitGame();
 	}
@@ -293,8 +293,10 @@ $(document).ready(function() {
 		let newUserName = allData[0]["value"];
 		let newPaaword = allData[1]["value"];
 		if (newUserName in userAccount && userAccount[newUserName] == newPaaword){
-			userLogIn = $('#username1').val();
 			moveTo('loginPage','settingsPage');
+			userLogIn = newUserName;
+			e.preventDefault(); 
+
 		}
 		else{
 			alert("Please select a valid username and password");
@@ -376,7 +378,8 @@ function fillRandomly() {
 var audio; ///////////////////
 
 function Start() {
-
+	document.getElementById("loginUserName1").value = userLogIn;
+	document.getElementById("loginUserName1").disabled = true;
 	//set red hearts
 	for (var h = 1; h <= 5; h++ ){
 		var id = "heart".concat(h.toString());

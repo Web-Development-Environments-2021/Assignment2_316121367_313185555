@@ -141,6 +141,10 @@
 				<audio src="audio/success.mp3" id = "winLive"></audio>
 				<audio src="audio/pacman_death.wav" id = "loseLive"></audio>
 				<img src="img/bag50.png" id = "bag50" style="display: none;"> <!-- to use in the canvase  -->
+				<div id="divLoginUserName">
+					<label for="loginUserName">Username:</label>
+					<input id="loginUserName1" type="text" />
+				</div>
 				<div id="score">
 					<label for="lblScore">SCORE:</label>
 					<input id="lblScore" type="text" />
@@ -166,18 +170,23 @@
 
 		<!-- about -->
 		<dialog id="aboutDialog" class="modal-open" height="0" width="50">
+			<h1>About us: </h1>
+			<ol>
+				<li>Eden Maximof - Information Systems Engineering Student </li>
+				<li>Mor Tadeski - Information Systems Engineering Student</li>
+			</ol>
 			<h1>Use of jquery </h1>
 			<ol>
 				<li>Vlidation forms</li>
 				<li>Handle key event of dialog</li>
 				<li>Handle click event of dialog</li>
-				</ol> 
+			</ol> 
 
 			<h1>Difficults </h1>
 			<ol>
 				<li>Move game characters (eg monsters) without destroying the logic of the game and the position of the points</li>
 				<li>Switch between game windows</li>
-				<li>Handle dialog window</li>
+				<li>Handle dialog window exit</li>
 			</ol> 
 			<button onclick="closeDialog()">Close dialog</button>
 		</dialog>
