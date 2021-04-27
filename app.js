@@ -39,6 +39,7 @@ var userAccount = {};
 userAccount['k'] = 'k';
 var allGoodKeyboard = {"0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,"d":68,"b":66,"a":65,"s":83,"i":73,"f":70,"k":75,"+":187,"p":80,"o":79,"u":85,"z":90,"t":84,"r":82,"e":69,"w":87,"g":71,"h":72,"j":74,"l":76,"#":191,"y":89,"x":88,"c":67,"v":86,"n":78,"m":77,",":188,".":190,"-":189,"ArrowRight":39,"ArrowLeft":37,"ArrowUp":38,"ArrowDown":40,";":188,":":190,"'":191,"*":187,"Q":81,"W":87,"E":69,"R":82,"T":84,"Z":90,"S":83,"A":65,"D":68,"I":73,"U":85,"O":79,"Y":89,"X":88,"C":67,"F":70,"V":86,"G":71,"B":66,"H":72,"N":78,"J":74,"M":77,"K":75,"L":76,"P":80,"!":49,"/":55,"=":48};
 var allPlaySettings;
+var userLogIn ="";
 
 var up;
 var down;
@@ -52,8 +53,45 @@ var max_time;
 var monstersAmount;
 
 
+function clearAllForms(){
+	$("#registration-form").trigger("reset");
+	$("#registration-form").data('validator').resetForm();
+	$("#login-form").trigger("reset");
+	$("#settings-form").trigger("reset");
+	$("#settings-form").data('validator').resetForm();
+}
+function closeDialog(){
+	document.getElementById("aboutDialog").close(); 
+	$(document).off('click');// off click hendele, we dont need him
+	$("#aboutDialog").off('keydown'); // off esc hendele, we dont need him
+}
+function openDialog(e){
+	e.stopImmediatePropagation() // stop the click so the click listener not handle this click to get here.
+	document.getElementById("aboutDialog").show();
+	outsideClickDialogHeandlear();
+
+}
+
+function outsideClickDialogHeandlear(){
+	let ignoreClickOnMeElement = document.getElementById('aboutDialog');
+	$(document).ready(function() {
+		$(document).on('click' ,function(e) {
+			let isClickInsideElement = ignoreClickOnMeElement.contains(e.target);
+    		if (!isClickInsideElement) {
+				closeDialog();
+			}
+		});
+		$("#aboutDialog").on('keydown', function(e) {
+    		if (e.which == 27) {
+				closeDialog();
+			}
+		});
+	 });
+}
+
 // changeing pages from cur to next: 
 function moveTo(cur, next){
+	userLogIn = "";// every move betwen pages log out the user
 	if (cur == 'settingsPage' && document.getElementById('gamePage').style.display == ''){ //we are in game mode 
 		exitGame();
 	}
@@ -63,7 +101,10 @@ function moveTo(cur, next){
 	toShow.style.display = "";
 	if (next == 'gamePage'){ 
 		Start();
+		return;
 	}
+	clearAllForms(); //befor moving to diffrent page, clear all forms
+
 	
 }
 function moveFromMenu(next){
@@ -238,7 +279,6 @@ $(document).ready(function() {
 			let newUserName = allData[0]["value"];
 			let newPaaword = allData[1]["value"];
 			userAccount[newUserName] = newPaaword;
-			form.trigger("reset");
 			moveTo('registrationPage', 'welcomePage');
 			alert("Registration was successful, please log in to continue");
 		}
@@ -251,8 +291,8 @@ $(document).ready(function() {
 		let newUserName = allData[0]["value"];
 		let newPaaword = allData[1]["value"];
 		if (newUserName in userAccount && userAccount[newUserName] == newPaaword){
+			userLogIn = $('#username1').val();
 			moveTo('loginPage','settingsPage');
-			theForm.trigger("reset");
 		}
 		else{
 			alert("Please select a valid username and password");
@@ -322,6 +362,8 @@ function fillRandomly() {
 	document.getElementById('color25poinets').value = "#" + Math.floor(Math.random()*16777215).toString(16);
 	document.getElementById('time').value = randomNum(60,6000);
 	document.getElementById('monsters').value = randomNum(1,4);
+	$("#settings-form").valid(); // all coments will disaper because all inputs are valid
+
 	return false; //not come back to welcomePage
 }
 
