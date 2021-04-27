@@ -7,6 +7,8 @@
 		<!-- validation form jquery -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+
 	</head>
 
 	<body>
@@ -18,7 +20,8 @@
 			<a onclick="moveFromMenu('welcomePage')">Welcome</a>
 			<a onclick="moveFromMenu('registrationPage')">Registration</a>
 			<a onclick="moveFromMenu('loginPage')">Login</a>
-			<a onclick="moveFromMenu('aboutDialog')">About</a>
+			<a onclick="openDialog(event)">About</a>
+			<!-- <a id = "opener1">About</a> -->
 		  </div>
 
 		<!-- welcome -->
@@ -74,90 +77,109 @@
 				</p>
 			</form>
 		</div>
-		<!-- settings -->
-		<div class="page" id="settingsPage" style="display: none;">
-			<h2 class="title">Settings</h2>
-			<form id="settings-form" action="" method="post">
-				<p>
-					<label for="up">choose key up</label>
-					<input type="text" id="up" name="up" onkeyup="uniCharCode(event, 'up')" autocomplete="off"> 
-				</p>
-				<p>
-					<label for="down">choose key down</label>
-					<input type="text" id="down" name="down" onkeyup="uniCharCode(event, 'down')" autocomplete="off"> 
-				</p>
-				<p>
-					<label for="left">choose key left</label>
-					<input type="text" id="left" name="left" onkeyup="uniCharCode(event, 'left')" autocomplete="off"> 
-				</p>
-				<p>
-					<label for="right">choose key right</label>
-					<input type="text" id="right" name="right" onkeyup="uniCharCode(event, 'right')" autocomplete="off"> 
-				</p>
-				<p>
-					<label for="food">How mach food do you want? (between 50 to 90)</label>
-					<input type="number" name="food" id="food">
-				</p>
-				<p>
-					<label for="color5poinets">Choose the food color that will give you 5 points: </label>
-					<input type="color" name="color5poinets" id="color5poinets">
-				</p>
-				<p>
-					<label for="color15poinets">Choose the food color that will give you 15 points: </label>
-					<input type="color" name="color15poinets" id="color15poinets">
-				</p>
-				<p> 
-					<label for="color25poinets">Choose the food color that will give you 25 points: </label>
-					<input type="color" name="color25poinets" id="color25poinets">
-				</p>
-				<p> 
-					<label for="time">Choose duration game (in seconds, minimum 60) </label>
-					<input type="number" name="time" id="time">
-				</p>
-				<p> 
-					<label for="monsters">Number of monsters in the game (minimum 1, maximum 4) </label>
-					<input type="number" name="monsters" id="monsters">
-				</p>
-				<p>
-					<button id="settingsRandom" name="settingsRandom" onclick="return fillRandomly()">Random</button>
-				</p>
-				<p>
-				  <input type="submit" id="settingsSubmit" name="settingsSubmit" value="submit">
-				</p>
-			</form>
+		<div class= "container">
+			<!-- settings -->
+			<div class="page" id="settingsPage" style="display: none;">
+				<h2 class="title">Settings</h2>
+				<form id="settings-form" action="" method="post">
+					<p>
+						<label for="up">choose key up</label>
+						<input type="text" id="up" name="up" onkeyup="uniCharCode(event, 'up')" autocomplete="off"> 
+					</p>
+					<p>
+						<label for="down">choose key down</label>
+						<input type="text" id="down" name="down" onkeyup="uniCharCode(event, 'down')" autocomplete="off"> 
+					</p>
+					<p>
+						<label for="left">choose key left</label>
+						<input type="text" id="left" name="left" onkeyup="uniCharCode(event, 'left')" autocomplete="off"> 
+					</p>
+					<p>
+						<label for="right">choose key right</label>
+						<input type="text" id="right" name="right" onkeyup="uniCharCode(event, 'right')" autocomplete="off"> 
+					</p>
+					<p>
+						<label for="food">How mach food do you want? (between 50 to 90)</label>
+						<input type="number" name="food" id="food">
+					</p>
+					<p>
+						<label for="color5poinets">Choose the food color that will give you 5 points: </label>
+						<input type="color" value="#DDA0DD" name="color5poinets" id="color5poinets">
+					</p>
+					<p>
+						<label for="color15poinets">Choose the food color that will give you 15 points: </label>
+						<input type="color" value="#FFC0CB" name="color15poinets" id="color15poinets">
+					</p>
+					<p> 
+						<label for="color25poinets">Choose the food color that will give you 25 points: </label>
+						<input type="color" value="#B0E0E6" name="color25poinets" id="color25poinets">
+					</p>
+					<p> 
+						<label for="time">Choose duration game (in seconds, minimum 60) </label>
+						<input type="number" name="time" id="time">
+					</p>
+					<p> 
+						<label for="monsters">Number of monsters in the game (minimum 1, maximum 4) </label>
+						<input type="number" name="monsters" id="monsters">
+					</p>
+					<p>
+						<button id="settingsRandom" name="settingsRandom" onclick="return fillRandomly()">Random</button>
+					</p>
+					<p>
+					<input type="submit" id="settingsSubmit" name="settingsSubmit" value="submit">
+					</p>
+				</form>
+			</div>
+
+			<!-- game  -->
+			<div class="bord" id="gamePage" style="display: none;" >
+				<audio src="audio/Pac-Man-Theme-Song.mp3" id = "themeMusic"></audio>
+				<audio src="audio/success.mp3" id = "winLive"></audio>
+				<audio src="audio/pacman_death.wav" id = "loseLive"></audio>
+				<img src="img/bag50.png" id = "bag50" style="display: none;"> <!-- to use in the canvase  -->
+				<div id="score">
+					<label for="lblScore">SCORE:</label>
+					<input id="lblScore" type="text" />
+				</div>
+				<div id="time">
+					<label for="lblTime">TIME:</label>
+					<input id="lblTime" type="text" />
+				</div>
+				<div id="lives">
+					<img src="img/heart_red.png" id = "heart1" class = "heart">
+					<img src="img/heart_red.png" id = "heart2" class = "heart">
+					<img src="img/heart_red.png" id = "heart3" class = "heart">
+					<img src="img/heart_red.png" id = "heart4" class = "heart">
+					<img src="img/heart_red.png" id = "heart5" class = "heart">
+				</div>
+				<div id="game">
+					<canvas id="canvas" height="550" width="550"></canvas>
+				</div>
+			</div>
+
 		</div>
 
 		<!-- about -->
-		<dialog id="aboutDialog" class="page" style="display: none;">
-			<p>Greetings, one and all!</p>
+		<dialog id="aboutDialog" class="modal-open" height="0" width="50">
+			<h1>Use of jquery </h1>
+			<ol>
+				<li>Vlidation forms</li>
+				<li>Handle key event of dialog</li>
+				<li>Handle click event of dialog</li>
+				</ol> 
+
+			<h1>Difficults </h1>
+			<ol>
+				<li>Move game characters (eg monsters) without destroying the logic of the game and the position of the points</li>
+				<li>Switch between game windows</li>
+				<li>Handle dialog window</li>
+			</ol> 
+			<button onclick="closeDialog()">Close dialog</button>
 		</dialog>
 
-		<!-- game  -->
-		<div class="bord" id="gamePage" style="display: none;" >
-			<audio src="audio/Pac-Man-Theme-Song.mp3" id = "themeMusic"></audio>
-			<audio src="audio/success.mp3" id = "winLive"></audio>
-			<audio src="audio/pacman_death.wav" id = "loseLive"></audio>
-			<img src="img/bag50.png" id = "bag50" style="display: none;"> <!-- to use in the canvase  -->
-			<div id="score">
-				<label for="lblScore">SCORE:</label>
-				<input id="lblScore" type="text" />
-			</div>
-			<div id="time">
-				<label for="lblTime">TIME:</label>
-				<input id="lblTime" type="text" />
-			</div>
-			<div id="lives">
-				<img src="img/heart_red.png" id = "heart1" class = "heart">
-				<img src="img/heart_red.png" id = "heart2" class = "heart">
-				<img src="img/heart_red.png" id = "heart3" class = "heart">
-				<img src="img/heart_red.png" id = "heart4" class = "heart">
-				<img src="img/heart_red.png" id = "heart5" class = "heart">
-			</div>
-			<div id="game">
-				<canvas id="canvas" height="550" width="550"></canvas>
-			</div>
-
-		</div>
+		<footer>
+			© 2018 Gandalf
+		</footer>
 		
 	</body>
 </html>
