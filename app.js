@@ -806,7 +806,7 @@ function Draw(diraction) {
 			} else if (board[i][j] == 4) { // wall
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 50, 50);
-				context.fillStyle = "grey"; //color
+				context.fillStyle = "rgb(97, 85, 173)"; //color
 				context.fill();
 			}
 		}

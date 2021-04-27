@@ -9,14 +9,13 @@
     }
 
   #canvas{
-    width: 78%;
-    height: 9%;
+    width: 90%;
     flex-wrap: nowrap;
     flex-direction: row;
     align-content: center;
     justify-content: center;
     overflow: auto;
-    border: 7px solid rgb(235, 245, 100)
+    border: 7px solid rgb(97, 85, 173);
   }
 
 
