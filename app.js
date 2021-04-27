@@ -103,6 +103,7 @@ function moveTo(cur, next){
 	toShow.style.display = "";
 	if (next == 'gamePage'){ 
 		Start();
+		window.scrollTo(0, 0);
 		return;
 	}
 	clearAllForms(); //befor moving to diffrent page, clear all forms
@@ -124,7 +125,7 @@ function moveFromMenu(next){
 $(document).ready(function() {
 
 	window.addEventListener("keydown", function(e) {
-		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+		if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
 			e.preventDefault();
 		}
 	}, false);
