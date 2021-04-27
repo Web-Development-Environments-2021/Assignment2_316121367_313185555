@@ -134,6 +134,10 @@
 
 		<!-- game  -->
 		<div class="bord" id="gamePage" style="display: none;" >
+			<audio src="audio/Pac-Man-Theme-Song.mp3" id = "themeMusic"></audio>
+			<audio src="audio/success.mp3" id = "winLive"></audio>
+			<audio src="audio/pacman_death.wav" id = "loseLive"></audio>
+			<img src="img/bag50.png" id = "bag50" style="display: none;"> <!-- to use in the canvase  -->
 			<div id="score">
 				<label for="lblScore">SCORE:</label>
 				<input id="lblScore" type="text" />
@@ -142,8 +146,15 @@
 				<label for="lblTime">TIME:</label>
 				<input id="lblTime" type="text" />
 			</div>
+			<div id="lives">
+				<img src="img/heart_red.png" id = "heart1" class = "heart">
+				<img src="img/heart_red.png" id = "heart2" class = "heart">
+				<img src="img/heart_red.png" id = "heart3" class = "heart">
+				<img src="img/heart_red.png" id = "heart4" class = "heart">
+				<img src="img/heart_red.png" id = "heart5" class = "heart">
+			</div>
 			<div id="game">
-				<canvas id="canvas" height="660" width="660"></canvas>
+				<canvas id="canvas" height="550" width="550"></canvas>
 			</div>
 
 		</div>

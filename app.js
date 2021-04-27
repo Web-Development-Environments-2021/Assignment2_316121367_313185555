@@ -327,16 +327,25 @@ function fillRandomly() {
 
 	
 //   game- eden
-
+var audio; ///////////////////
 
 function Start() {
+
+
+	// themeAudio = document.getElementById("themeAudio");
+	// themeAudio.loop = true;
+	// themeAudio.load();
+	audio = document.getElementById("themeMusic");
+	audio.volume = 0.2;
+	audio.loop = true;
+	audio.play();
 
 	up = allGoodKeyboard[allPlaySettings[0].value]; // ascii val
 	down = allGoodKeyboard[allPlaySettings[1].value];
 	left = allGoodKeyboard[allPlaySettings[2].value];
 	right = allGoodKeyboard[allPlaySettings[3].value];
-	//food_remain = parseInt(allPlaySettings[4].value);
-	food_remain = 20;
+	// food_remain = parseInt(allPlaySettings[4].value);
+	food_remain = 30;
 	smallColor = allPlaySettings[5].value;
 	midColor = allPlaySettings[6].value;
 	bigColor = allPlaySettings[7].value;
@@ -414,24 +423,12 @@ function Start() {
 			if (isWall){
 				board[i][j] = 4;
 			}
-			
-			// else if (
-			// 	(i == 3 && j == 3) ||
-			// 	(i == 3 && j == 4) ||
-			// 	(i == 3 && j == 5) ||
-			// 	(i == 6 && j == 1) ||
-			// 	(i == 6 && j == 2)
-			// ) {
-			// 	board[i][j] = 4;
-			// }
 			else if(i == 5 && j == 5){
-				board[i][j] = 6;
-				// movingPoints.i = 5; // alredy updated
-				// movingPoints.j = 5;
+				board[i][j] = 6; // movingPoints
 			}
 			else {
 				var randomNum = Math.random();
-				if (randomNum <= (1.0 * food_remain) / cnt) {
+				if (randomNum <= (1.0 * food_remain) / cnt && food_remain > 0) {
 					//need to choose what point kind of point to draw 
 					var randomPointKind = Math.random() * (food_remain - 1) + 1;					
 					if (randomPointKind <= food_remain_small){
@@ -478,7 +475,6 @@ function Start() {
 			food_remain_mid--;
 		}
 		food_remain--;
-
 	}
 	
 	//place exstraLive
@@ -548,16 +544,16 @@ function loop(x, y){
 	context.beginPath();
 	context.fillStyle="white";
 	//context.arc(x,y,140,0,Math.PI*2,true);
-	context.arc(x,y,30,0,Math.PI*2,true);
+	context.arc(x,y,23,0,Math.PI*2,true);
 	context.fill();
 	context.strokeStyle="grey";
-	context.lineWidth=3;
+	context.lineWidth=2;
 	context.stroke();
 	drawNumber(x,y);
 	
-	drawPointer(360*(h/12)+(m/60)*30-90,12,"black",3, x, y);
-	drawPointer(360*(m/60)+(s/60)*6-90,18,"black",3, x, y);
-	drawPointer(360*(s/60)+x-90,23,"grey",1, x, y);
+	drawPointer(360*(h/12)+(m/60)*30-90,8,"black",3, x, y);
+	drawPointer(360*(m/60)+(s/60)*6-90,12,"black",3, x, y);
+	drawPointer(360*(s/60)+x-90,16,"grey",1, x, y);
 }
 
 function drawNumber(x,y){
@@ -568,8 +564,8 @@ function drawNumber(x,y){
 		dd = Math.PI/180*(d+n*30);
 		// tx = Math.cos(dd)*120+140;
 		// ty = Math.sin(dd)*120+160;
-		tx = Math.cos(dd)*25+x -2;
-		ty = Math.sin(dd)*25+y +1;
+		tx = Math.cos(dd)*18+x -2;
+		ty = Math.sin(dd)*18+y +1;
 		context.font = "6px Verdana";
 		context.fillStyle = "black";
 		context.fillText(str, tx, ty);
@@ -589,11 +585,11 @@ function drawPointer(deg,len,color,w, x, y){
 	context.stroke();
 }
 /////// end clock drawing
-
 function Draw(diraction) {
 	canvas.width = canvas.width; //clean board
-	lblScore.value = score;
-	//lblTime.value = time_elapsed;
+	//lblScore.value = score;
+	lblScore.value = ballsNotEaten;
+
 	lblTime.value = Math.floor(max_time - time_elapsed);
 	if (lblTime.value <= 10){
 		document.getElementById("lblTime").style.color = "#ff0000";
@@ -601,20 +597,20 @@ function Draw(diraction) {
 	for (var i = 0; i < 11; i++) {
 		for (var j = 0; j < 11; j++) {
 			var center = new Object();
-			center.x = i * 60 + 30; /////
-			center.y = j * 60 + 30;///////
+			center.x = i * 50 + 25; /////
+			center.y = j * 50 + 25;///////
 
 			if (board[i][j] == 9){ // time adder
-				loop(center.x, center.y);
+				loop(center.x-2, center.y);
 			}
 			else if (board[i][j] == 8){ // exstra live
 				
 				context.beginPath();
 				if (extraLive.small == true){
-					var w = 37, h = 37;
+					var w = 32, h = 32;
 				}
 				else{
-					var w = 40, h = 40;
+					var w = 36, h = 36;
 				}
 				context.strokeStyle = "#000000";
 				context.strokeWeight = 3;
@@ -639,17 +635,15 @@ function Draw(diraction) {
 
 			}
 			else if (board[i][j] == 7){ //monster
-				DrawMonster(center.x, center.y);
-				// context.beginPath();
-				// context.arc(center.x, center.y, 25, 0, 2 * Math.PI);
-				// context.fillStyle = "purple"; //color
-				// context.fill();
+				DrawMonster(center.x-20 , center.y+10);
 			}
 			else if (board[i][j] == 6) { // movingPoints
-				context.beginPath();
-				context.arc(center.x, center.y, 35, 0, 2 * Math.PI);
-				context.fillStyle = "blue"; //color
-				context.fill();
+				var img = document.getElementById("bag50");
+				context.drawImage(img, center.x-22, center.y-25);
+				// context.beginPath();
+				// context.arc(center.x, center.y, 35, 0, 2 * Math.PI);
+				// context.fillStyle = "blue"; //color
+				// context.fill();
 			} 
 			else if (board[i][j] == 5) { // packman
 				//diraction: 1 = up.  2 = down.  3 = left.  4 = right
@@ -661,46 +655,46 @@ function Draw(diraction) {
 				
 				if (packman.direction == 1){
 					if(packman.mouthOpen){
-						context.arc(center.x, center.y, 30, 0, 1.35 * Math.PI);
+						context.arc(center.x, center.y, 22, 0, 1.35 * Math.PI);
 						context.lineTo(center.x, center.y);
-						context.arc(center.x, center.y, 30, 1.65 * Math.PI, 2 * Math.PI);
+						context.arc(center.x, center.y, 22, 1.65 * Math.PI, 2 * Math.PI);
 					}
 					else{
-						context.arc(center.x, center.y, 30, 0, 1.45 * Math.PI);
+						context.arc(center.x, center.y, 22, 0, 1.45 * Math.PI);
 						context.lineTo(center.x, center.y);
-						context.arc(center.x, center.y, 30, 1.55 * Math.PI, 2 * Math.PI);
+						context.arc(center.x, center.y, 22, 1.55 * Math.PI, 2 * Math.PI);
 					}
 				}
 				else if(packman.direction == 2){
 					if (packman.mouthOpen){
-						context.arc(center.x, center.y, 30, 0, 0.35 * Math.PI);
+						context.arc(center.x, center.y, 22, 0, 0.35 * Math.PI);
 						context.lineTo(center.x, center.y);
-						context.arc(center.x, center.y, 30, 0.65 * Math.PI, 2 * Math.PI);
+						context.arc(center.x, center.y, 22, 0.65 * Math.PI, 2 * Math.PI);
 					}
 					else{
-						context.arc(center.x, center.y, 30, 0, 0.45 * Math.PI);
+						context.arc(center.x, center.y, 22, 0, 0.45 * Math.PI);
 						context.lineTo(center.x, center.y);
-						context.arc(center.x, center.y, 30, 0.55 * Math.PI, 2 * Math.PI);
+						context.arc(center.x, center.y, 22, 0.55 * Math.PI, 2 * Math.PI);
 					}
 				}
 				else if(packman.direction == 3){
 					if (packman.mouthOpen){
-						context.arc(center.x, center.y, 30, 0, 0.85 * Math.PI);
+						context.arc(center.x, center.y, 22, 0, 0.85 * Math.PI);
 						context.lineTo(center.x, center.y);
-						context.arc(center.x, center.y, 30, 1.15 * Math.PI, 2 * Math.PI);
+						context.arc(center.x, center.y, 22, 1.15 * Math.PI, 2 * Math.PI);
 					}
 					else{
-						context.arc(center.x, center.y, 30, 0, 0.95 * Math.PI);
+						context.arc(center.x, center.y, 22, 0, 0.95 * Math.PI);
 						context.lineTo(center.x, center.y);
-						context.arc(center.x, center.y, 30, 1.05 * Math.PI, 2 * Math.PI);
+						context.arc(center.x, center.y, 22, 1.05 * Math.PI, 2 * Math.PI);
 					}
 				}
 				else {
 					if(packman.mouthOpen){
-						context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI);
+						context.arc(center.x, center.y, 22, 0.15 * Math.PI, 1.85 * Math.PI);
 					}
 					else{
-						context.arc(center.x, center.y, 30, 0.05 * Math.PI, 1.95 * Math.PI);
+						context.arc(center.x, center.y, 22, 0.05 * Math.PI, 1.95 * Math.PI);
 					}
 					
 					
@@ -711,16 +705,16 @@ function Draw(diraction) {
 				context.fill();
 				context.beginPath();
 				if ( packman.direction == 1 ){
-					context.arc(center.x - 15, center.y - 5, 5, 0, 2 * Math.PI); // circle
+					context.arc(center.x - 12, center.y - 3, 4, 0, 2 * Math.PI); // circle
 				}
 				else if ( packman.direction == 2 ){
-					context.arc(center.x + 15, center.y + 5, 5, 0, 2 * Math.PI); // circle
+					context.arc(center.x + 12, center.y + 3, 4, 0, 2 * Math.PI); // circle
 				}
 				else if ( packman.direction == 3 ){
-					context.arc(center.x - 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+					context.arc(center.x - 3, center.y - 12, 4, 0, 2 * Math.PI); // circle
 				}
 				else{
-					context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+					context.arc(center.x + 3, center.y - 12, 4, 0, 2 * Math.PI); // circle
 				}
 
 				
@@ -760,7 +754,7 @@ function Draw(diraction) {
 				context.fillText("25", center.x -6, center.y + 3);
 			} else if (board[i][j] == 4) { // wall
 				context.beginPath();
-				context.rect(center.x - 30, center.y - 30, 60, 60);
+				context.rect(center.x - 30, center.y - 30, 50, 50);
 				context.fillStyle = "grey"; //color
 				context.fill();
 			}
@@ -774,8 +768,6 @@ function FindMonstersPositions(){
 		var moved = false;
 		if(monster.i < packman.i) {
 			if (board[monster.i+1][monster.j] == 5){
-				liveRemained --;
-				score -= 10;
 				restart();
 				moved = true;
 			} else if (board[monster.i+1][monster.j] <= 3){
@@ -788,8 +780,6 @@ function FindMonstersPositions(){
 		}
 		else if (monster.i > packman.i ){
 			if (board[monster.i-1][monster.j] == 5){
-				liveRemained --;
-				score -= 10;
 				restart();
 				moved = true;
 			} else if (board[monster.i-1][monster.j] <= 3) {
@@ -800,10 +790,8 @@ function FindMonstersPositions(){
 				moved = true;
 			}
 		}
-		if (monster.j < packman.j &&(!(moved))){
+		if ( monster.j < packman.j && !( moved ) ){
 			if (board[monster.i][monster.j+1] == 5){
-				liveRemained --;
-				score -= 10;
 				restart();
 			} else if (board[monster.i][monster.j+1] <= 3){
 				board[monster.i][monster.j] = monster.prev_val; // return the board to the value it was before
@@ -812,10 +800,8 @@ function FindMonstersPositions(){
 				board[monster.i][monster.j] = 7;
 			}
 		}
-		else if (monster.j > packman.j &&(!(moved)) ){
+		else if ( monster.j > packman.j &&(!(moved)) ){
 			if (board[monster.i][monster.j-1] == 5){
-				liveRemained --;
-				score -= 10;
 				restart();
 			} else if (board[monster.i][monster.j-1] <= 3){
 				board[monster.i][monster.j] = monster.prev_val; // return the board to the value it was before
@@ -835,6 +821,8 @@ function FindMovingPointsPosition(){
 	if((j != 0 && board[i][j - 1] <= 3) || (j != 10 && board[i][j + 1] <= 3) || ( i != 0 && board[i - 1][j] <= 3) || ( i != 10 && board[i + 1][j] <= 3) ){
 		//there is a place to move to
 		while (true){
+			i = movingPoints.i;
+			j = movingPoints.j;
 			var moveTo = Math.floor(Math.random() * (4 - 1 + 1) ) + 1; // = 1/2/3/4 (maybe 0? it will go to 4)
 			if (moveTo == 1){
 				j--;
@@ -848,7 +836,7 @@ function FindMovingPointsPosition(){
 			else{
 				i++;
 			}
-			if ( 0 <= i <= 10 && 0 <= j <= 10 ){
+			if (i >= 0 && i <= 10 && j >= 0 && j <= 10){
 				var dest = board[i][j]; ///// error here !
 				if (dest <= 3){ // pass or points
 					board[movingPoints.i][movingPoints.j] = movingPoints.prev_val; // return the board to the value it was before
@@ -863,7 +851,31 @@ function FindMovingPointsPosition(){
 	}	
 }
 
+function ChangeHeartColor(toWhite){
+	if (toWhite){
+		var id = "heart".concat(liveRemained.toString());
+		document.getElementById(id).src = "img/heart_white.png";
+
+		var music = document.getElementById("loseLive");
+		audio.volume = 0.2;
+		music.play();
+	}
+	else{
+		var id = "heart".concat(liveRemained.toString());
+		document.getElementById(id).src = "img/heart_red.png";
+
+		var music = document.getElementById("winLive");
+		music.play();
+	}
+}
+
 function restart(){
+
+	//make curent heart red
+	ChangeHeartColor(true);
+	liveRemained--;
+	score -= 10;
+
 
 	//clear moving points
 	if( movingPoints.show){
@@ -888,12 +900,13 @@ function restart(){
 	for(var m = 0 ; m < monstersAmount; m++){
 		var monster = monsters[m];
 
-		if (monster.prev_val != 5){ // not packman - points - they are not eaten
-			board[monster.i][monster.j] = monster.prev_val;
-		}
-		else{ 
-			board[monster.i][monster.j] = 0;
-		}
+		// if (monster.prev_val != 5){ // not packman - points - they are not eaten
+		// 	board[monster.i][monster.j] = monster.prev_val;
+		// }
+		// else{
+		// 	board[monster.i][monster.j] = 0;
+		// }
+		board[monster.i][monster.j] = monster.prev_val;
 		//place on frame, and update prev val if needed
 		var newPosition = monstersLocations[m];
 		monster.i = newPosition[0];
@@ -979,13 +992,14 @@ function UpdatePosition() {
 			ballsNotEaten--;
 		}		
 	} else if (cellVal == 7){ // monster
-		liveRemained--;
-		score -= 10;
-		restart()
+		restart();
 		//code here to start again . . . .
 	} else if(cellVal == 8){ // exstra live
 		extraLive.show = false;
-		liveRemained++;
+		if (liveRemained < 5){ // cant have more then 5 lives
+			liveRemained++;
+			ChangeHeartColor(false);
+		}
 	} else if ( cellVal == 9){ // time adder
 		timeAdder.show = false;
 		max_time += 10; // add 10 sec ////////// need to reverse the clock !!
@@ -1037,16 +1051,25 @@ function UpdatePosition() {
 	if (score >= 20 && time_elapsed <= 10) {
 		packman.color = "green";
 	}
-	if ( time_elapsed >= max_time ){
+	if ( time_elapsed >= max_time ){ // time over
+		audio.pause();
 		window.clearInterval(interval);
-		window.alert("Game over"); // change massage
+		if (score < 100){
+			window.alert("you are better than ".concat( score.toString() ).concat(" points!")); // change massage
+		}
+		else{
+			window.alert("Winner!!!"); // change massage
+		}
+		
 	}
 	else if (ballsNotEaten == 0) { 
+		audio.pause();
 		window.clearInterval(interval);
-		window.alert("Game completed");
+		window.alert("Game completed with ".concat(score.toString()).concat(" points!"));
 	} else if (liveRemained == 0) {
+		audio.pause();
 		window.clearInterval(interval);
-		window.alert("no more lives!");
+		window.alert("Loser!");
 	}else {
 		Draw(x);
 	}
