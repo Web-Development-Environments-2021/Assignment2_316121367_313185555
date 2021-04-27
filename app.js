@@ -454,6 +454,7 @@ function Start() {
 		monsters[m] = {i:location[0], j:location[1], prev_val:0,};
 	}
 	var walls = [[2,2], [2,3],[2,7],[2,8],[8,2],[8,3],[8,7],[8,8]];
+	
 	// numbers on board:
 	//0 = pass.  1 = small food.  2 = mid food.  3 = big food.  4 = wall.  5 = packman.  movingPoints = 6.  monster = 7. exstraLife = 8.
 	for (var i = 0; i < 11; i++) {
@@ -482,34 +483,27 @@ function Start() {
 				board[i][j] = 6; // movingPoints
 			}
 			else {
-				var randomNum = Math.random();
-				if (randomNum <= (1.0 * food_remain) / cnt && food_remain > 0) {
-					//need to choose what point kind of point to draw 
-					var randomPointKind = Math.random() * (food_remain - 1) + 1;					
-					if (randomPointKind <= food_remain_small){
-						board[i][j] = 1;
-						food_remain_small -- ;
-					} else if (randomPointKind <= food_remain_small+food_remain_mid) {
-						board[i][j] = 2;
-						food_remain_mid -- ;
-					} else {
-						board[i][j] = 3;
-						food_remain_big -- ;
-					}					
-					food_remain--;
-					
-				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
-					packman.i = i;
-					packman.j = j;
-					pacman_remain--;
-					board[i][j] = 5; // packman
-				} else {
-					board[i][j] = 0; // pass
-				}
-				cnt--;
+				board[i][j] = 0;
+				// var randomNum = Math.random();
+				
+				// if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
+				// 	packman.i = i;
+				// 	packman.j = j;
+				// 	pacman_remain--;
+				// 	board[i][j] = 5; // packman
+				// } else {
+				// 	board[i][j] = 0; // pass
+				// }
+				// cnt--;
 			}
 		}
 	}
+	//place pac-man
+	var pacCell = findRandomEmptyCell(board);
+	packman.i = pacCell[0];
+	packman.j = pacCell[1];
+	board[packman.i][packman.j] = 5;
+
 	for (var m = 0; m < monstersAmount; m++){ // locate the monsters
 		board[monsters[m].i][monsters[m].j] = 7;
 	}
@@ -564,11 +558,15 @@ function Start() {
 }
 
 function findRandomEmptyCell(board) {
-	var i = Math.floor(Math.random() * 10 + 1);
-	var j = Math.floor(Math.random() * 10 + 1);
+	var i = Math.floor(Math.random() * 11);
+	if ( i == 11){ i = 10;}
+	var j = Math.floor(Math.random() * 11);
+	if ( j == 11){ j = 10;}
 	while (board[i][j] != 0) {
-		i = Math.floor(Math.random() * 10 + 1);
-		j = Math.floor(Math.random() * 10 + 1);
+		i = Math.floor(Math.random() * 11);
+		if ( i == 11){ i = 10;}
+		j = Math.floor(Math.random() * 11);
+		if ( j == 11){ j = 10;}
 	}
 	return [i, j];
 }
