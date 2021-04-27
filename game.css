@@ -1,5 +1,38 @@
 
 .heart{
-    width: 45px;
-    height: 45px;
+    width: 5%;
+    height: 5%;
   }
+  #lives{
+    margin: auto;
+    padding: 10px;
+    }
+
+  #canvas{
+    width: 78%;
+    height: 9%;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;
+    border: 7px solid rgb(235, 245, 100)
+  }
+
+
+  #gamePage label {
+    width: 60px;
+    font-weight: bold;
+    font-family: 'Segoe Script';
+    font-size: 10px;
+    display: inline-block;
+    padding-left: 12px;
+  }
+  #gamePage input{
+    border-radius: 20px; /*  round border */
+    border: 1px solid #ccc;
+    font-size: 10px;
+    font-family: 'Papyrus';
+    width: 80px;
+  }
+

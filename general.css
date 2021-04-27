@@ -1,12 +1,16 @@
 
 #aboutDialog {
-    width: 100;
-     height: 350px;
+
      position: absolute;
      left: 30%;
      top: 50%; 
      margin-left: -150px;
      margin-top: -150px;
+     /* / */
+     background-color: #d9c2e7;
+     font-size: 20c;
+    font-family: 'Papyrus';
+
   }
 
 
@@ -26,6 +30,11 @@ button {
 /*     width: 200px;
     height: 50px;
     margin-top: 7px; */
+}
+
+footer {
+    position: relative,
+
 }
 
 

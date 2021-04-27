@@ -21,26 +21,35 @@
 			<p class="header-part">Eden Maximof : 316121367 & Mor Tadeski : 313185555</p>
 			<div class="header-part">
 				<img src = "img/mini-logo.png" id = "mini-logo">
-			</div>		
-		</header>
-
-		<div id="menu" class="menuebar">
+			</div>
+			<div id="menu" class="menuebar">
 			<a onclick="moveFromMenu('welcomePage')">Welcome</a>
 			<a onclick="moveFromMenu('registrationPage')">Registration</a>
 			<a onclick="moveFromMenu('loginPage')">Login</a>
 			<a onclick="openDialog(event)">About</a>
 			<!-- <a id = "opener1">About</a> -->
 		  </div>
+					
+		</header>
+
+		
 
 		<!-- welcome -->
+		<br>
+		<br>
+		<br>
 		<div class="page" id="welcomePage">
+			<br>
+			<br>
+			<br>
+			<br>
 			<img src = "img/logo.png" id = "welcomeLogo">
 			<div id = "welcomeButtens">
 				<button class = "welcomeButten" onclick="moveTo('welcomePage', 'registrationPage')">Registration</button>
 				<button class = "welcomeButten" onclick="moveTo('welcomePage', 'loginPage')">Login</button>
 			</div>
 		</div>
-
+	
 		<!-- registration -->
 		<div class="page" id="registrationPage" style="display: none;">
 			<h2 class="title">Registration</h2>
@@ -148,18 +157,20 @@
 				<audio src="audio/success.mp3" id = "winLive"></audio>
 				<audio src="audio/pacman_death.wav" id = "loseLive"></audio>
 				<img src="img/bag50.png" id = "bag50" style="display: none;"> <!-- to use in the canvase  -->
-				<div id="divLoginUserName">
+				<div style="display: flex;">
+				<p>
 					<label for="loginUserName">Username:</label>
 					<input id="loginUserName1" type="text" />
-				</div>
-				<div id="score">
+				</p>
+				<p>
 					<label for="lblScore">SCORE:</label>
 					<input id="lblScore" type="text" />
-				</div>
-				<div id="time">
+				</p>
+				<p>
 					<label for="lblTime">TIME:</label>
 					<input id="lblTime" type="text" />
-				</div>
+				</p>
+			</div>
 				<div id="lives">
 					<img src="img/heart_red.png" id = "heart1" class = "heart">
 					<img src="img/heart_red.png" id = "heart2" class = "heart">
@@ -168,7 +179,7 @@
 					<img src="img/heart_red.png" id = "heart5" class = "heart">
 				</div>
 				<div id="game">
-					<canvas id="canvas" height="550" width="550" style="border: 30px solid grey;"></canvas>
+					<canvas id="canvas" height="550" width="550" ></canvas>
 				</div>
 				<button onclick="moveTo('settingsPage','settingsPage')">New Game</button>
 			</div>
