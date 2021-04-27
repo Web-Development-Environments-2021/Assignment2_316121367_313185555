@@ -424,8 +424,8 @@ function Start() {
 	score = 0;
 	start_time = new Date();
 	movingPoints = {
-		i : 5,
-		j : 5,
+		i : 7,
+		j : 4,
 		prev_val : 0,
 		show : true,
 		interval : 0,
@@ -454,29 +454,30 @@ function Start() {
 	var pacman_remain = 1;
 	
 	//monsters:
-	monstersLocations = [[0,0],[0,10],[10,0],[10,10]];
+	monstersLocations = [[0,0],[0,7],[13,0],[13,7]];
 	for (var m = 0; m < monstersAmount; m++){
 		var location = monstersLocations[m];
 		monsters[m] = {i:location[0], j:location[1], prev_val:0,};
 	}
-	var walls = [[2,2], [2,3],[2,7],[2,8],[8,2],[8,3],[8,7],[8,8]];
+	//var walls = [[2,2], [2,3],[2,7],[2,8],[8,2],[8,3],[8,7],[8,8]];
+	var walls = [[2,1],[2,2],[2,5],[2,6],[3,1],[3,6],[10,1],[10,6],[11,1],[11,2],[11,5],[11,6]];
 	
 	// numbers on board:
 	//0 = pass.  1 = small food.  2 = mid food.  3 = big food.  4 = wall.  5 = packman.  movingPoints = 6.  monster = 7. exstraLife = 8.
-	for (var i = 0; i < 11; i++) {
+	for (var i = 0; i < 14; i++) {
 		board[i] = new Array();
-		for (var j = 0; j < 11; j++) {
+		for (var j = 0; j < 8; j++) {
 				
 			if(
 				(i == 0 && j == 0) ||
-				(i == 0 && j == 10) ||
-				(i == 10 && j == 0) ||
-				(i == 10 && j == 10)
+				(i == 0 && j == 7) ||
+				(i == 13 && j == 0) ||
+				(i == 13 && j == 7)
 			){
 				board[i][j] = 0;// we want to keep those places empty for the monsters
 			}
 			var isWall = false;	
-			for (var w = 0; w < 8; w++){
+			for (var w = 0; w < 12; w++){
 				if ( walls[w][0] == i && walls[w][1] == j ){
 					isWall = true;
 					break;
@@ -485,7 +486,7 @@ function Start() {
 			if (isWall){
 				board[i][j] = 4;
 			}
-			else if(i == 5 && j == 5){
+			else if(i == 7 && j == 4){
 				board[i][j] = 6; // movingPoints
 			}
 			else {
@@ -564,15 +565,15 @@ function Start() {
 }
 
 function findRandomEmptyCell(board) {
-	var i = Math.floor(Math.random() * 11);
-	if ( i == 11){ i = 10;}
-	var j = Math.floor(Math.random() * 11);
-	if ( j == 11){ j = 10;}
+	var i = Math.floor(Math.random() * 14);
+	if ( i == 14){ i = 13;}
+	var j = Math.floor(Math.random() * 8);
+	if ( j == 8){ j = 7;}
 	while (board[i][j] != 0) {
-		i = Math.floor(Math.random() * 11);
-		if ( i == 11){ i = 10;}
-		j = Math.floor(Math.random() * 11);
-		if ( j == 11){ j = 10;}
+		i = Math.floor(Math.random() * 14);
+		if ( i == 14){ i = 13;}
+		j = Math.floor(Math.random() * 8);
+		if ( j == 8){ j = 7;}
 	}
 	return [i, j];
 }
@@ -653,8 +654,8 @@ function Draw(diraction) {
 	if (lblTime.value <= 10){
 		document.getElementById("lblTime").style.color = "#ff0000";
 	}
-	for (var i = 0; i < 11; i++) {
-		for (var j = 0; j < 11; j++) {
+	for (var i = 0; i < 14; i++) {
+		for (var j = 0; j < 8; j++) {
 			var center = new Object();
 			center.x = i * 50 + 25; /////
 			center.y = j * 50 + 25;///////
@@ -699,10 +700,6 @@ function Draw(diraction) {
 			else if (board[i][j] == 6) { // movingPoints
 				var img = document.getElementById("bag50");
 				context.drawImage(img, center.x-22, center.y-25);
-				// context.beginPath();
-				// context.arc(center.x, center.y, 35, 0, 2 * Math.PI);
-				// context.fillStyle = "blue"; //color
-				// context.fill();
 			} 
 			else if (board[i][j] == 5) { // packman
 				//diraction: 1 = up.  2 = down.  3 = left.  4 = right
@@ -780,11 +777,6 @@ function Draw(diraction) {
 				context.fillStyle = "black"; //color
 				context.fill();
 			} else if (board[i][j] == 1) { // food small
-				//frame
-				// context.beginPath();
-				// context.arc(center.x, center.y, 8, 0, 2 * Math.PI);
-				// context.stroke();
-				//circle
 				context.beginPath();
 				context.arc(center.x, center.y, 8, 0, 2 * Math.PI); // circle
 				context.fillStyle = smallColor; //color
@@ -877,7 +869,7 @@ function FindMovingPointsPosition(){
 	var i = movingPoints.i;
 	var j = movingPoints.j;
 
-	if((j != 0 && board[i][j - 1] <= 3) || (j != 10 && board[i][j + 1] <= 3) || ( i != 0 && board[i - 1][j] <= 3) || ( i != 10 && board[i + 1][j] <= 3) ){
+	if((j != 0 && board[i][j - 1] <= 3) || (j != 8 && board[i][j + 1] <= 3) || ( i != 0 && board[i - 1][j] <= 3) || ( i != 14 && board[i + 1][j] <= 3) ){
 		//there is a place to move to
 		while (true){
 			i = movingPoints.i;
@@ -895,7 +887,7 @@ function FindMovingPointsPosition(){
 			else{
 				i++;
 			}
-			if (i >= 0 && i <= 10 && j >= 0 && j <= 10){
+			if (i >= 0 && i <= 13 && j >= 0 && j <= 7){
 				var dest = board[i][j]; ///// error here !
 				if (dest <= 3){ // pass or points
 					board[movingPoints.i][movingPoints.j] = movingPoints.prev_val; // return the board to the value it was before
@@ -1043,7 +1035,7 @@ function UpdatePosition() {
 		}
 	}
 	if (x == 2) {
-		if (packman.j < 10 && board[packman.i][packman.j + 1] != 4) {
+		if (packman.j < 7 && board[packman.i][packman.j + 1] != 4) {
 			packman.j++;//down
 		}
 	}
@@ -1053,7 +1045,7 @@ function UpdatePosition() {
 		}
 	}
 	if (x == 4) {
-		if (packman.i < 10 && board[packman.i + 1][packman.j] != 4) {
+		if (packman.i < 13 && board[packman.i + 1][packman.j] != 4) {
 			packman.i++;//right
 		}
 	}
