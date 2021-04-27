@@ -72,6 +72,7 @@ function closeDialog(){
 function openDialog(e){
 	e.stopImmediatePropagation() // stop the click so the click listener not handle this click to get here.
 	document.getElementById("aboutDialog").show();
+	window.scrollTo(0, 0);
 	outsideClickDialogHeandlear();
 }
 
@@ -84,7 +85,7 @@ function outsideClickDialogHeandlear(){
 				closeDialog();
 			}
 		});
-		$("#aboutDialog").on('keydown', function(e) {
+		$(document).on('keydown', function(e) {
     		if (e.which == 27) {
 				closeDialog();
 			}
