@@ -60,16 +60,19 @@ function clearAllForms(){
 	$("#settings-form").trigger("reset");
 	$("#settings-form").data('validator').resetForm();
 }
+
+// handle Dialog open and exit
+
 function closeDialog(){
 	document.getElementById("aboutDialog").close(); 
 	$(document).off('click');// off click hendele, we dont need him
 	$("#aboutDialog").off('keydown'); // off esc hendele, we dont need him
 }
+
 function openDialog(e){
 	e.stopImmediatePropagation() // stop the click so the click listener not handle this click to get here.
 	document.getElementById("aboutDialog").show();
 	outsideClickDialogHeandlear();
-
 }
 
 function outsideClickDialogHeandlear(){
@@ -91,9 +94,6 @@ function outsideClickDialogHeandlear(){
 
 // changeing pages from cur to next: 
 function moveTo(cur, next){
-	// if ( !(cur == next)){
-	// 	userLogIn = "";// every move betwen pages log out the user
-	// }
 	if (cur == 'settingsPage' && document.getElementById('gamePage').style.display == ''){ //we are in game mode 
 		exitGame();
 	}
@@ -106,9 +106,8 @@ function moveTo(cur, next){
 		return;
 	}
 	clearAllForms(); //befor moving to diffrent page, clear all forms
-
-	
 }
+// changeing pages to next when we dont know cur: 
 function moveFromMenu(next){
 	let allPotantiolCur = document.getElementsByClassName("page");
 	let cur;
@@ -274,7 +273,7 @@ $(document).ready(function() {
 	  });
 	// submit forms
 	$("#registration-form").submit(function(e){
-		e.preventDefault(); //saves the account?
+		e.preventDefault(); 
 		let form = $(this); 
 		if(form.valid()){
 			let allData = form.serializeArray();
@@ -287,7 +286,7 @@ $(document).ready(function() {
 
 	});
 	$("#login-form").submit(function(e){ 
-		e.preventDefault(); //saves the account?
+		e.preventDefault(); 
 		let theForm = $(this);
 		let allData = theForm.serializeArray();
 		let newUserName = allData[0]["value"];
@@ -296,7 +295,6 @@ $(document).ready(function() {
 			moveTo('loginPage','settingsPage');
 			userLogIn = newUserName;
 			e.preventDefault(); 
-
 		}
 		else{
 			alert("Please select a valid username and password");
@@ -350,6 +348,7 @@ function randomNum(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// let the user chhose key, change acocrding to user click
 function uniCharCode(event, diraction) {
 	var start = new Date().getTime();
     while (new Date().getTime() < start + 20);
@@ -357,6 +356,7 @@ function uniCharCode(event, diraction) {
 	document.getElementById(diraction).value = event.key;
 }
 
+// random settings
 function fillRandomly() {
 	document.getElementById('up').value = 'ArrowUp';
 	document.getElementById('down').value = 'ArrowDown';
@@ -378,8 +378,11 @@ function fillRandomly() {
 var audio; ///////////////////
 
 function Start() {
+
+	//set log in user name
 	document.getElementById("loginUserName1").value = userLogIn;
 	document.getElementById("loginUserName1").disabled = true;
+
 	//set red hearts
 	for (var h = 1; h <= 5; h++ ){
 		var id = "heart".concat(h.toString());
@@ -392,6 +395,7 @@ function Start() {
 	audio.loop = true;
 	audio.play();
 
+	//setting adjustment
 	up = allGoodKeyboard[allPlaySettings[0].value]; // ascii val
 	down = allGoodKeyboard[allPlaySettings[1].value];
 	left = allGoodKeyboard[allPlaySettings[2].value];
