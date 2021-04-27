@@ -2,14 +2,16 @@
 #aboutDialog {
 
     font-family: 'Segoe Script';
-    margin-top: 20px;
+    /* margin-top: 20px; */
     color: rgb(97, 85, 173);
      position: absolute;
      left: 30%;
-     top: 50%; 
+     top: 32%; 
      margin-left: -150px;
      margin-top: -150px;
      background-color: #d9c2e7;
+     /*  */
+     
 
   }
 
@@ -33,14 +35,36 @@ button {
 }
 
 footer {
-    position: relative,
+
+    position:fixed;
+    size: 1cm 1cm;
+    width:100%;
+
+    font-size: 12px;
+    font-family: 'Segoe Script';
+
+    color: rgb(97, 85, 173);  
+    background-color: rgb(239, 235, 241);};;
+
+
 
 }
+/* #rights{
+    display: inline-block;
+    vertical-align: top;
+
+}
+#connect{
+    margin-left: 76%; 
+    height: 100;
+    vertical-align: top;
+
+} */
 h2{
     font-family: 'Segoe Script';
-  display: inline-block;
-  margin-top: 20px;
-  color: rgb(97, 85, 173);
+    display: inline-block;
+    margin-top: 20px;
+    color: rgb(97, 85, 173);
 }
 
 

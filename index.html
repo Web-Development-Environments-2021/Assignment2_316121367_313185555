@@ -49,6 +49,7 @@
 			<div id = "welcomeButtens">
 				<button class = "welcomeButten" onclick="moveTo('welcomePage', 'registrationPage')">Registration</button>
 				<button class = "welcomeButten" onclick="moveTo('welcomePage', 'loginPage')">Login</button>
+				<br>
 			</div>
 		</div>
 	
@@ -150,6 +151,9 @@
 					<p>
 					<input type="submit" id="settingsSubmit" name="settingsSubmit" value="submit">
 					</p>
+					<br>
+					<br>
+			<br><br>
 				</form>
 			</div>
 
@@ -190,6 +194,7 @@
 
 		<!-- about -->
 		<dialog id="aboutDialog" class="modal-open" height="0" width="50">
+			<span style="float: right" onclick="closeDialog() ">&times;</span>
 			<h1>About us: </h1>
 			<ol>
 				<li>Eden Maximof - Information Systems Engineering Student </li>
@@ -208,11 +213,14 @@
 				<li>Switch between game windows</li>
 				<li>Handle dialog window exit</li>
 			</ol> 
-			<button onclick="closeDialog()">Close dialog</button>
+			<!-- <button onclick="closeDialog()">Close dialog</button> -->
 		</dialog>
 
-		<footer>
-			© 2018 Gandalf
+		<footer style="bottom:0;">
+			<p id="rights" style="float: left;">© Tadeski & Maximof</p>
+			<p id="connect" style="float: right;">conect us:<br>
+			 tadeski@bgu.post.ac.il / edenmax@bgu.post.ac.il
+			</p>
 		</footer>
 		
 	</body>
