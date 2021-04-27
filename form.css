@@ -35,9 +35,9 @@ label {
   }
   
   [type="submit"],button {
-      border-radius: 20px; /*  round border */
+      border-radius: 20px; 
       
-      background: rgb(54, 150, 206);
+      background-color: #fae79f;
       border: none;
       font-size: 20c;
       font-family: 'Papyrus';
@@ -52,6 +52,15 @@ label {
     width: 100%;
     height: 200px;
   }
+
+/* plaster */
+form{
+  margin-top: 200px ;
+}
+
+/* .title{
+  margin-top: 200px ;
+} */
 /* #settingsPage {
     flex: 1;
 }

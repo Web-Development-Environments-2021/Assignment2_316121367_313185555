@@ -2,6 +2,10 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="form.css">
+		<link rel="stylesheet" href="game.css">
+		<link rel="stylesheet" href="general.css">
+		<link rel="stylesheet" href="headerAndMenu.css">
+		<link rel="stylesheet" href="welcome.css">
 		<script src="./jquery-3.4.1.slim.min.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
 		<!-- validation form jquery -->
@@ -12,9 +16,12 @@
 	</head>
 
 	<body>
-		<header>
-			<h1>packman website</h1>
-			<p>Eden Maximof : 316121367 & Mor Tadeski : 313185555</p>
+		<header>			
+			<h1 class="header-part">packman website</h1>
+			<p class="header-part">Eden Maximof : 316121367 & Mor Tadeski : 313185555</p>
+			<div class="header-part">
+				<img src = "img/mini-logo.png" id = "mini-logo">
+			</div>		
 		</header>
 
 		<div id="menu" class="menuebar">
@@ -29,8 +36,8 @@
 		<div class="page" id="welcomePage">
 			<img src = "img/logo.png" id = "welcomeLogo">
 			<div id = "welcomeButtens">
-				<button onclick="moveTo('welcomePage', 'registrationPage')">Registration</button>
-				<button onclick="moveTo('welcomePage', 'loginPage')">Login</button>
+				<button class = "welcomeButten" onclick="moveTo('welcomePage', 'registrationPage')">Registration</button>
+				<button class = "welcomeButten" onclick="moveTo('welcomePage', 'loginPage')">Login</button>
 			</div>
 		</div>
 
@@ -140,7 +147,7 @@
 				<audio src="audio/Pac-Man-Theme-Song.mp3" id = "themeMusic"></audio>
 				<audio src="audio/success.mp3" id = "winLive"></audio>
 				<audio src="audio/pacman_death.wav" id = "loseLive"></audio>
-				<img src="img/bag50.png" id = "bag50" style="display: none;"> <!-- to use in the canvase  -->
+				<img src="img/bag50.png" id = "bag50" style="display: none;"> <!-- to use in the canvas  -->
 				<div id="score">
 					<label for="lblScore">SCORE:</label>
 					<input id="lblScore" type="text" />
@@ -157,7 +164,7 @@
 					<img src="img/heart_red.png" id = "heart5" class = "heart">
 				</div>
 				<div id="game">
-					<canvas id="canvas" height="550" width="550"></canvas>
+					<canvas id="canvas" height="550" width="550" style="border: 30px solid grey;"></canvas>
 				</div>
 				<button onclick="moveTo('settingsPage','settingsPage')">New Game</button>
 			</div>

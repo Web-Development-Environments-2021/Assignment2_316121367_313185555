@@ -8,3 +8,24 @@
      margin-left: -150px;
      margin-top: -150px;
   }
+
+
+body {background-color: rgb(239, 235, 241);}
+
+/* .title{
+    margin-top: 200px ;
+} */
+
+button {
+    border-radius: 20px; /*  round border */
+
+    background-color: #fae79f;
+    border: none;
+    font-size: 20c;
+    font-family: 'Papyrus';
+/*     width: 200px;
+    height: 50px;
+    margin-top: 7px; */
+}
+
+
