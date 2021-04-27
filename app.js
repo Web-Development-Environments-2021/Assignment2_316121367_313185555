@@ -902,13 +902,13 @@ function FindMovingPointsPosition(){
 	}	
 }
 
+
 function ChangeHeartColor(toWhite){
 	var id = "heart".concat(liveRemained.toString());
 	if (toWhite){
 		document.getElementById(id).src = "img/heart_white.png";
 
 		var music = document.getElementById("loseLive");
-		audio.volume = 0.2;
 		music.play();
 	}
 	else{
@@ -1026,6 +1026,8 @@ function UpdatePosition() {
 	
 	// end check for me !
 
+	var pointAudio = document.getElementById("eatPointAudio");
+
 
 	board[packman.i][packman.j] = 0;
 	var x = GetKeyPressed();
@@ -1052,12 +1054,15 @@ function UpdatePosition() {
 	
 	var cellVal = board[packman.i][packman.j]
 	if (cellVal == 1) {
+		pointAudio.play();
 		score += 5;
 		ballsNotEaten--;
 	} else if (cellVal == 2){
+		pointAudio.play();
 		score += 15;
 		ballsNotEaten--;
 	} else if (cellVal == 3){
+		pointAudio.play();
 		score += 25;
 		ballsNotEaten--;
 	} else if(cellVal == 6){
@@ -1065,6 +1070,7 @@ function UpdatePosition() {
 		score += 50;
 		if(movingPoints.prev_val != 0){
 			score += movingPoints.prev_val; // the points that were here before
+			pointAudio.play();
 			ballsNotEaten--;
 		}		
 	} else if (cellVal == 7){ // monster
