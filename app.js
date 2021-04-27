@@ -122,6 +122,12 @@ function moveFromMenu(next){
 
 // all forms hendaling using jquery
 $(document).ready(function() {
+
+	window.addEventListener("keydown", function(e) {
+		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+			e.preventDefault();
+		}
+	}, false);
 	
 	context = canvas.getContext("2d");
 
