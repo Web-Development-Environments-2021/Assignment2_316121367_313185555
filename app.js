@@ -91,7 +91,9 @@ function outsideClickDialogHeandlear(){
 
 // changeing pages from cur to next: 
 function moveTo(cur, next){
-	userLogIn = "";// every move betwen pages log out the user
+	if ( !(cur == next)){
+		userLogIn = "";// every move betwen pages log out the user
+	}
 	if (cur == 'settingsPage' && document.getElementById('gamePage').style.display == ''){ //we are in game mode 
 		exitGame();
 	}
