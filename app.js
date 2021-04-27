@@ -328,6 +328,8 @@ function inableForm(c){
 }
 
 function exitGame(){
+	//stop music
+	audio.pause();
 	// kill interval
 	clearInterval(interval);
 	//restart settings
@@ -373,10 +375,13 @@ var audio; ///////////////////
 
 function Start() {
 
-
-	// themeAudio = document.getElementById("themeAudio");
-	// themeAudio.loop = true;
-	// themeAudio.load();
+	//set red hearts
+	for (var h = 1; h <= 5; h++ ){
+		var id = "heart".concat(h.toString());
+		document.getElementById(id).src = "img/heart_red.png";
+	}
+	
+	//audio
 	audio = document.getElementById("themeMusic");
 	audio.volume = 0.2;
 	audio.loop = true;
@@ -386,8 +391,7 @@ function Start() {
 	down = allGoodKeyboard[allPlaySettings[1].value];
 	left = allGoodKeyboard[allPlaySettings[2].value];
 	right = allGoodKeyboard[allPlaySettings[3].value];
-	// food_remain = parseInt(allPlaySettings[4].value);
-	food_remain = 30;
+	food_remain = parseInt(allPlaySettings[4].value);
 	smallColor = allPlaySettings[5].value;
 	midColor = allPlaySettings[6].value;
 	bigColor = allPlaySettings[7].value;
@@ -629,8 +633,8 @@ function drawPointer(deg,len,color,w, x, y){
 /////// end clock drawing
 function Draw(diraction) {
 	canvas.width = canvas.width; //clean board
-	//lblScore.value = score;
-	lblScore.value = ballsNotEaten;
+	lblScore.value = score;
+	//lblScore.value = ballsNotEaten; // 
 
 	lblTime.value = Math.floor(max_time - time_elapsed);
 	if (lblTime.value <= 10){
@@ -894,8 +898,8 @@ function FindMovingPointsPosition(){
 }
 
 function ChangeHeartColor(toWhite){
+	var id = "heart".concat(liveRemained.toString());
 	if (toWhite){
-		var id = "heart".concat(liveRemained.toString());
 		document.getElementById(id).src = "img/heart_white.png";
 
 		var music = document.getElementById("loseLive");
@@ -903,7 +907,6 @@ function ChangeHeartColor(toWhite){
 		music.play();
 	}
 	else{
-		var id = "heart".concat(liveRemained.toString());
 		document.getElementById(id).src = "img/heart_red.png";
 
 		var music = document.getElementById("winLive");
@@ -993,6 +996,32 @@ function restart(){
 
 
 function UpdatePosition() {
+
+	//check for me !!!
+	// var ballsOnCanvas = 0
+	// for (var i = 0 ; i < 11 ; i ++){
+	// 	for ( var j = 0 ; j < 11 ; j++ ){
+	// 		if ( board[i][j] != 0 && board[i][j]  <= 3){ // food
+	// 			ballsOnCanvas ++ ;
+	// 		}
+	// 	}
+	// }
+	// for (var m = 0; m < monstersAmount ; m++){
+	// 	if (monsters[m].prev_val != 0 && monsters[m].prev_val  <= 3) {
+	// 		ballsOnCanvas ++ ;
+	// 	}
+	// }
+	// if (movingPoints.prev_val != 0 && movingPoints.prev_val <= 3){
+	// 	ballsOnCanvas ++ ;
+	// }
+	// if (ballsOnCanvas != ballsNotEaten){
+	// 	window.clearInterval(interval);
+	// 	window.alert("ballsOnCanvas ".concat(ballsOnCanvas.toString()));
+	// }
+	
+	// end check for me !
+
+
 	board[packman.i][packman.j] = 0;
 	var x = GetKeyPressed();
 	if (x == 1) { //up
@@ -1088,6 +1117,8 @@ function UpdatePosition() {
 			extraLive.interval++;
 		}
 	}
+
+
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 	if (score >= 20 && time_elapsed <= 10) {
@@ -1101,8 +1132,7 @@ function UpdatePosition() {
 		}
 		else{
 			window.alert("Winner!!!"); // change massage
-		}
-		
+		}	
 	}
 	else if (ballsNotEaten == 0) { 
 		audio.pause();
