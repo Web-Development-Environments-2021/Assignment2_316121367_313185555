@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="form.css">
-		<link rel="stylesheet" href="game.css">
-		<link rel="stylesheet" href="general.css">
-		<link rel="stylesheet" href="headerAndMenu.css">
-		<link rel="stylesheet" href="welcome.css">
+		<link rel="stylesheet" href="styleCSS/form.css">
+		<link rel="stylesheet" href="styleCSS/game.css">
+		<link rel="stylesheet" href="styleCSS/general.css">
+		<link rel="stylesheet" href="styleCSS/headerAndMenu.css">
+		<link rel="stylesheet" href="styleCSS/welcome.css">
 		<script src="./jquery-3.4.1.slim.min.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
 		<!-- validation form jquery -->
@@ -21,7 +21,7 @@
 			<!-- <p class="header-part" style="font-size: 12px;">Eden Maximof : 316121367 & Mor Tadeski : 313185555</p> -->
 			<p class="header-part" style="font-size:0.9vw;">Eden Maximof : 316121367 & Mor Tadeski : 313185555</p>
 			<div class="header-part">
-				<img src = "img/mini-logo.png" id = "mini-logo">
+				<img src = "img/mini-logo.png" id = "mini-logo" onclick="moveFromMenu('welcomePage')">
 			</div>
 			<div id="menu" class="menuebar">
 				<a onclick="moveFromMenu('welcomePage')">Welcome</a>
@@ -167,7 +167,7 @@
 				<img src="img/bag50.png" id = "bag50" style="display: none;"> <!-- to use in the canvase  -->
 				<div style="display: flex;">
 				<p>
-					<label for="loginUserName">Username:</label>
+					<label for="loginUserName">USERNAME:</label>
 					<input id="loginUserName1" type="text" />
 				</p>
 				<p>

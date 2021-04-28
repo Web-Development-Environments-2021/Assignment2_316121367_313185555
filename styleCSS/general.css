@@ -44,27 +44,17 @@ footer {
     font-family: 'Segoe Script';
 
     color: rgb(97, 85, 173);  
-    background-color: rgb(239, 235, 241);};;
+    background-color: rgb(239, 235, 241);
 
 
 
 }
-/* #rights{
-    display: inline-block;
-    vertical-align: top;
 
-}
-#connect{
-    margin-left: 76%; 
-    height: 100;
-    vertical-align: top;
-
-} */
 h2{
     font-family: 'Segoe Script';
     display: inline-block;
     margin-top: 20px;
-    color: rgb(97, 85, 173);
+    color: #e7e075;
 }
 
 

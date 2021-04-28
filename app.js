@@ -382,12 +382,12 @@ function fillRandomly() {
 }
 
 	
-//   game- eden
-var audio; ///////////////////
+//   game
+var audio; 
 
 function Start() {
 
-	//set log in user name
+	//set loged in user name
 	document.getElementById("loginUserName1").value = userLogIn;
 	document.getElementById("loginUserName1").disabled = true;
 
@@ -461,7 +461,7 @@ function Start() {
 		var location = monstersLocations[m];
 		monsters[m] = {i:location[0], j:location[1], prev_val:0,};
 	}
-	//var walls = [[2,2], [2,3],[2,7],[2,8],[8,2],[8,3],[8,7],[8,8]];
+	
 	var walls = [[2,1],[2,2],[2,5],[2,6],[3,1],[3,6],[10,1],[10,6],[11,1],[11,2],[11,5],[11,6]];
 	
 	// numbers on board:
@@ -493,19 +493,14 @@ function Start() {
 			}
 			else {
 				board[i][j] = 0;
-				// var randomNum = Math.random();
 				
-				// if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
-				// 	packman.i = i;
-				// 	packman.j = j;
-				// 	pacman_remain--;
-				// 	board[i][j] = 5; // packman
-				// } else {
-				// 	board[i][j] = 0; // pass
-				// }
-				// cnt--;
 			}
 		}
+	}
+	
+
+	for (var m = 0; m < monstersAmount; m++){ // locate the monsters
+		board[monsters[m].i][monsters[m].j] = 7;
 	}
 	//place pac-man
 	var pacCell = findRandomEmptyCell(board);
@@ -513,9 +508,7 @@ function Start() {
 	packman.j = pacCell[1];
 	board[packman.i][packman.j] = 5;
 
-	for (var m = 0; m < monstersAmount; m++){ // locate the monsters
-		board[monsters[m].i][monsters[m].j] = 7;
-	}
+	//place food
 	while (food_remain > 0){
 		var emptyCell = findRandomEmptyCell(board);
 		var i = emptyCell[0];
@@ -536,12 +529,13 @@ function Start() {
 	}
 	
 	//place exstraLive
-	if (extraLive.show){ // no need for this if
+	if (extraLive.show){ 
 		var heartCell = findRandomEmptyCell(board);
 		extraLive.i = heartCell[0];
 		extraLive.j = heartCell[1];
 		board[heartCell[0]][heartCell[1]] = 8;
 	}
+
 	//place time adder
 	var clockCell = findRandomEmptyCell(board);
 	timeAdder.i = clockCell[0];
@@ -567,6 +561,7 @@ function Start() {
 }
 
 function findRandomEmptyCell(board) {
+	// for board 14x8
 	var i = Math.floor(Math.random() * 14);
 	if ( i == 14){ i = 13;}
 	var j = Math.floor(Math.random() * 8);
@@ -605,7 +600,6 @@ function loop(x, y){
 	
 	context.beginPath();
 	context.fillStyle="white";
-	//context.arc(x,y,140,0,Math.PI*2,true);
 	context.arc(x,y,23,0,Math.PI*2,true);
 	context.fill();
 	context.strokeStyle="grey";
@@ -624,8 +618,6 @@ function drawNumber(x,y){
 		num = new Number(n+1);
 		str = num.toString();
 		dd = Math.PI/180*(d+n*30);
-		// tx = Math.cos(dd)*120+140;
-		// ty = Math.sin(dd)*120+160;
 		tx = Math.cos(dd)*18+x -2;
 		ty = Math.sin(dd)*18+y +1;
 		context.font = "6px Verdana";
@@ -646,11 +638,11 @@ function drawPointer(deg,len,color,w, x, y){
 	context.lineTo(x1,y1);
 	context.stroke();
 }
-/////// end clock drawing
+/// end clock drawing
+
 function Draw(diraction) {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
-	//lblScore.value = ballsNotEaten; // 
 
 	lblTime.value = Math.floor(max_time - time_elapsed);
 	if (lblTime.value <= 10){
@@ -659,8 +651,8 @@ function Draw(diraction) {
 	for (var i = 0; i < 14; i++) {
 		for (var j = 0; j < 8; j++) {
 			var center = new Object();
-			center.x = i * 50 + 25; /////
-			center.y = j * 50 + 25;///////
+			center.x = i * 50 + 25;
+			center.y = j * 50 + 25;
 
 			if (board[i][j] == 9){ // time adder
 				loop(center.x-2, center.y);
@@ -668,7 +660,7 @@ function Draw(diraction) {
 			else if (board[i][j] == 8){ // exstra live
 				
 				context.beginPath();
-				if (extraLive.small == true){
+				if (extraLive.small == true){ // beating heat - changes sizes
 					var w = 32, h = 32;
 				}
 				else{
@@ -703,7 +695,7 @@ function Draw(diraction) {
 				var img = document.getElementById("bag50");
 				context.drawImage(img, center.x-22, center.y-25);
 			} 
-			else if (board[i][j] == 5) { // packman
+			else if (board[i][j] == 5) { // pac-man
 				//diraction: 1 = up.  2 = down.  3 = left.  4 = right
 				
 				context.beginPath();			
@@ -876,7 +868,7 @@ function FindMovingPointsPosition(){
 		while (true){
 			i = movingPoints.i;
 			j = movingPoints.j;
-			var moveTo = Math.floor(Math.random() * (4 - 1 + 1) ) + 1; // = 1/2/3/4 (maybe 0? it will go to 4)
+			var moveTo = Math.floor(Math.random() * (4 - 1 + 1) ) + 1; // = 1/2/3/4 (maybe 0 - it will go to 4)
 			if (moveTo == 1){
 				j--;
 			}
@@ -928,7 +920,6 @@ function restart(){
 	liveRemained--;
 	score -= 10;
 
-
 	//clear moving points
 	if( movingPoints.show){
 		board[movingPoints.i][movingPoints.j] = movingPoints.prev_val;
@@ -947,17 +938,9 @@ function restart(){
 	//clear packman
 	board[packman.i][packman.j] = 0;
 
-
 	//monsters
 	for(var m = 0 ; m < monstersAmount; m++){
 		var monster = monsters[m];
-
-		// if (monster.prev_val != 5){ // not packman - points - they are not eaten
-		// 	board[monster.i][monster.j] = monster.prev_val;
-		// }
-		// else{
-		// 	board[monster.i][monster.j] = 0;
-		// }
 		board[monster.i][monster.j] = monster.prev_val;
 		//place on frame, and update prev val if needed
 		var newPosition = monstersLocations[m];
@@ -991,45 +974,16 @@ function restart(){
 		board[timeAdder.i][timeAdder.j] = 9;
 	}
 
-	//packman
+	//pac-man
 	var packmanCell = findRandomEmptyCell(board);
 	packman.i = packmanCell[0];
 	packman.j = packmanCell[1];
 	board[packman.i][packman.j] = 5;
 	
-
-
 }
 
 
 function UpdatePosition() {
-
-	//check for me !!!
-	// var ballsOnCanvas = 0
-	// for (var i = 0 ; i < 11 ; i ++){
-	// 	for ( var j = 0 ; j < 11 ; j++ ){
-	// 		if ( board[i][j] != 0 && board[i][j]  <= 3){ // food
-	// 			ballsOnCanvas ++ ;
-	// 		}
-	// 	}
-	// }
-	// for (var m = 0; m < monstersAmount ; m++){
-	// 	if (monsters[m].prev_val != 0 && monsters[m].prev_val  <= 3) {
-	// 		ballsOnCanvas ++ ;
-	// 	}
-	// }
-	// if (movingPoints.prev_val != 0 && movingPoints.prev_val <= 3){
-	// 	ballsOnCanvas ++ ;
-	// }
-	// if (ballsOnCanvas != ballsNotEaten){
-	// 	window.clearInterval(interval);
-	// 	window.alert("ballsOnCanvas ".concat(ballsOnCanvas.toString()));
-	// }
-	
-	// end check for me !
-
-	var pointAudio = document.getElementById("eatPointAudio");
-
 
 	board[packman.i][packman.j] = 0;
 	var x = GetKeyPressed();
@@ -1053,7 +1007,9 @@ function UpdatePosition() {
 			packman.i++;//right
 		}
 	}
-	
+
+	var pointAudio = document.getElementById("eatPointAudio");
+
 	var cellVal = board[packman.i][packman.j]
 	if (cellVal == 1) {
 		pointAudio.play();
@@ -1077,7 +1033,6 @@ function UpdatePosition() {
 		}		
 	} else if (cellVal == 7){ // monster
 		restart();
-		//code here to start again . . . .
 	} else if(cellVal == 8){ // exstra live
 		extraLive.show = false;
 		if (liveRemained < 5){ // cant have more then 5 lives
@@ -1086,11 +1041,11 @@ function UpdatePosition() {
 		}
 	} else if ( cellVal == 9){ // time adder
 		timeAdder.show = false;
-		max_time += 10; // add 10 sec ////////// need to reverse the clock !!
+		max_time += 10; // add 10 sec
 	}
 	board[packman.i][packman.j] = 5;
 
-	//update packman mouth
+	//update packman mouth - every interval
 	packman.mouthOpen = !packman.mouthOpen;
 
 	//update movingPoints object position (only every 5 Intervals)
@@ -1118,7 +1073,6 @@ function UpdatePosition() {
 			
 		}
 		if(extraLive.interval == 10){
-
 			var heart_location = findRandomEmptyCell(board);
 			board[extraLive.i][extraLive.j] = 0;
 			extraLive.i = heart_location[0];
@@ -1131,7 +1085,6 @@ function UpdatePosition() {
 		}
 	}
 
-
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 	if (score >= 20 && time_elapsed <= 10) {
@@ -1141,16 +1094,16 @@ function UpdatePosition() {
 		audio.pause();
 		window.clearInterval(interval);
 		if (score < 100){
-			window.alert("you are better than ".concat( score.toString() ).concat(" points!")); // change massage
+			window.alert("you are better than ".concat( score.toString() ).concat(" points!"));
 		}
 		else{
-			window.alert("Winner!!!"); // change massage
+			window.alert("Winner!!!"); 
 		}	
 	}
 	else if (ballsNotEaten == 0) { 
 		audio.pause();
 		window.clearInterval(interval);
-		window.alert("Game completed with ".concat(score.toString()).concat(" points!"));
+		window.alert("Well done - game completed with ".concat(score.toString()).concat(" points!"));
 	} else if (liveRemained == 0) {
 		audio.pause();
 		window.clearInterval(interval);
@@ -1158,10 +1111,8 @@ function UpdatePosition() {
 	}else {
 		Draw(x);
 	}
-	
 
 }
-
 
 function DrawMonster(x, y) {
 	var canvas = document.getElementById('canvas');
