@@ -907,9 +907,8 @@ function ChangeHeartColor(toWhite){
 	}
 	else{
 		document.getElementById(id).src = "img/heart_red.png";
-
-		var music = document.getElementById("winLive");
-		music.play();
+		var winObject = document.getElementById("winObject");
+		winObject.play();
 	}
 }
 
@@ -1024,11 +1023,12 @@ function UpdatePosition() {
 		score += 25;
 		ballsNotEaten--;
 	} else if(cellVal == 6){
+		var winObject = document.getElementById("winObject");
+		winObject.play();
 		movingPoints.show = false;
 		score += 50;
 		if(movingPoints.prev_val != 0){
 			score += movingPoints.prev_val; // the points that were here before
-			pointAudio.play();
 			ballsNotEaten--;
 		}		
 	} else if (cellVal == 7){ // monster
@@ -1040,6 +1040,8 @@ function UpdatePosition() {
 			ChangeHeartColor(false);
 		}
 	} else if ( cellVal == 9){ // time adder
+		var winObject = document.getElementById("winObject");
+		winObject.play();
 		timeAdder.show = false;
 		max_time += 10; // add 10 sec
 	}
